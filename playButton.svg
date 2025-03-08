@@ -1,0 +1,6 @@
+<svg width="38" height="38" viewBox="0 0 38 38" xmlns="http://www.w3.org/2000/svg" fill="none">
+  <!-- White Circle -->
+  <circle cx="19" cy="19" r="17" fill="white"/>
+  <!-- Black Play Triangle -->
+  <polygon points="15,11 28,19 15,27" fill="black"/>
+</svg>

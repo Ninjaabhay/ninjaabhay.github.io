@@ -1,0 +1,13 @@
+<svg id='Music_24' width='24' height='24' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'>
+    <rect width='24' height='24' stroke='none' fill='#000000' opacity='0'/>
+    <g transform="matrix(0.5 0 0 0.5 12 12)">
+        <g style="">
+            <g transform="matrix(1 0 0 1 0 -0.46)">
+                <path style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: #34c166; fill-rule: nonzero; opacity: 1;" transform=" translate(-20, -19.54)" d="M 9 37.5 C 5.416 37.5 2.5 34.584 2.5 31 C 2.5 27.415999999999997 5.416 24.5 9 24.5 C 9.964 24.5 10.901 24.713 11.785 25.134 L 12.5 25.474 L 12.5 5.429 L 37.5 1.5830000000000002 L 37.5 29 C 37.5 32.584 34.584 35.5 31 35.5 C 27.415999999999997 35.5 24.5 32.584 24.5 29 C 24.5 25.415999999999997 27.416 22.5 31 22.5 C 31.964 22.5 32.901 22.713 33.785 23.134 L 34.5 23.474 L 34.5 11.023 L 15.5 13.954 L 15.5 31 C 15.5 34.584 12.584 37.5 9 37.5 z" stroke-linecap="round"/>
+            </g>
+            <g transform="matrix(1 0 0 1 0 -0.5)">
+                <path style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: #34c166; fill-rule: nonzero; opacity: 1;" transform=" translate(-20, -19.5)" d="M 37 2.166 L 37 29 C 37 32.308 34.308 35 31 35 C 27.692 35 25 32.308 25 29 C 25 25.692 27.692 23 31 23 C 31.889 23 32.754 23.197 33.57 23.586 L 35 24.266 L 35 22.683 L 35 11.607 L 35 10.440999999999999 L 33.848 10.619 L 15.847999999999999 13.395 L 15 13.525 L 15 14.383000000000001 L 15 31 C 15 34.308 12.308 37 9 37 C 5.692 37 3 34.308 3 31 C 3 27.692 5.692 25 9 25 C 9.889 25 10.754 25.197 11.57 25.586 L 13 26.266 L 13 24.683 L 13 5.858 L 37 2.166 M 38 1 L 12 5 L 12 24.683 C 11.09 24.25 10.075 24 9 24 C 5.134 24 2 27.134 2 31 C 2 34.866 5.134 38 9 38 C 12.866 38 16 34.866 16 31 L 16 14.383 L 34 11.607 L 34 22.683 C 33.09 22.25 32.075 22 31 22 C 27.134 22 24 25.134 24 29 C 24 32.866 27.134 36 31 36 C 34.866 36 38 32.866 38 29 L 38 1 L 38 1 z" stroke-linecap="round"/>
+            </g>
+        </g>
+    </g>
+</svg>
