@@ -5,12 +5,14 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SpotifyClone</title>
-    <link rel="stylesheet" href="style.css" />
-    <link rel="stylesheet" href="utility.css" />
-    <link rel="stylesheet" href="seekbar.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/utility.css" />
+    <link rel="stylesheet" href="css/seekbar.css" />
+    <link rel="stylesheet" href="css/playlist.css" />
 
 
-    <script src="functions.js" defer></script>
+
+    <script src="script.js" defer></script>
 </head>
 
 <body>
@@ -20,18 +22,22 @@
     <div class="container flex bg-balck">
         <div class="left ">
             <div class="home bg-grey rounded m-1 p-1">
-                <div class="logo invert"><img src="logo.svg" alt="" /></div>
-
+                <div class="flex" style="justify-content: space-between;">
+                    <div class="logo invert"><img width="110" src="imgs/logo.svg" alt="" /></div>
+                    <div class="close invert">
+                        <img src="imgs/close.svg" width="30" alt="">
+                    </div>
+                </div>
                 <ul>
-                    <li><img class="invert" src="home.svg" alt="Home" />Home</li>
+                    <li><img class="invert" src="imgs/home.svg" alt="Home" />Home</li>
 
-                    <li><img class="invert" src="search.svg" alt="Search" />Search</li>
+                    <li><img class="invert" src="imgs/search.svg" alt="Search" />Search</li>
                 </ul>
             </div>
 
             <div class="library bg-grey rounded m-1 p-1">
                 <div class="heading">
-                    <img class="invert" src="playlist.svg" alt="libLogo" />
+                    <img class="invert" src="imgs/playlist.svg" alt="libLogo" />
                     <h2>Your Libraray</h2>
                 </div>
 
@@ -44,6 +50,7 @@
                             <div class="songName">${song}</div>
                             <div class="artist">Abhay Tiwari</div>
                         </div>
+
                         <div class=" playButtonCard invert"> <img src="playButtoncard.svg" alt=""></div>
                         </li> -->
                     </ul>
@@ -66,13 +73,13 @@
 
         </div>
 
-        <div class="right  bg-grey rounded  ">
+        <div class="right  bg-grey rounded m-1 p-1 ">
 
             <div class="header  ">
+                <img src="imgs/hamburger.svg" class="hamburger invert">
 
-                <div class="nav">
-
-                    <svg id='Chevron_Left_24' width='24' height='24' viewBox='0 0 24 24'
+                <div class="nav flex">
+                    <svg id='Chevron_Left_24' class="aeros" width='24' height='24' viewBox='0 0 24 24'
                         xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'>
                         <rect width='24' height='24' stroke='none' fill='#000000' opacity='0' />
 
@@ -86,7 +93,7 @@
                         </g>
                     </svg>
 
-                    <svg id='Chevron_Right_24' width='24' height='24' viewBox='0 0 24 24'
+                    <svg id='Chevron_Right_24' class="aeros" width='24' height='24' viewBox='0 0 24 24'
                         xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'>
                         <rect width='24' height='24' stroke='none' fill='#000000' opacity='0' />
 
@@ -102,162 +109,55 @@
 
                 </div>
 
-                <div class="button">
+                <div class="button flex">
                     <button class="signupBtn">Sign up</button>
                     <button class="loginBtn">Log in</button>
                 </div>
 
             </div>
 
+            <!-- Playlist Section -->
             <div class="spotifyPlaylist">
                 <h1>Spotify Playlists</h1>
+            </div>
 
+            <div id="playlistContainer"></div>
 
-
-
-                <div class="cardContainer">
-
-                    <div class="card">
-
-
-
-                        <div class="play ">
-
-                            <svg id='Play_Button_Circled_24' width='48' height='48' viewBox='0 0 48 48'
-                                xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'>
-                                <rect width='48' height='48' stroke='none' fill='none' opacity='0' />
-
-                                <!-- Outer Circle (Filled with #3be477) -->
-                                <circle cx="24" cy="24" r="22" fill="#3be477" stroke="none" />
-
-                                <!-- Centered Play Triangle -->
-                                <polygon points="18,14 34,24 18,34" fill="#000000" />
-                            </svg>
-
-
-
-                        </div>
-
-
-
-
-                        <!-- if we are using the image throug website link it will work  but it is not good as if the website go down the image will also disapear -->
-
-                        <img src="./images/˖ _ ᝢ ʾ ִֶָ ꕤ 🥛 ⁾⁾.jpeg" alt="">
-
-                        <h2>Daily Mix 1</h2>
-
-                        <p>A.R. Rahman, Atif Aslam, Shankar-Ehsaan-Loy and more</p>
-
-
-
-
+            <div class="playbarContainer">
+                <div class="seek-container">
+                    <input type="range" id="seekBar" min="0" max="100" value="0">
+                </div>
+                <div class="playbar flex">
+                    <div class="controls ">
+                        <button id="prevBtn"><img src="imgs/previous.svg" alt="previousSong"></button>
+                        <button id="playPauseBtn"><img src="imgs/playButton.svg" alt="PlaySong"></button>
+                        <button id="nextBtn"><img src="imgs/nextBtn.svg" alt="nextSong"></button>
                     </div>
 
-
-
-
-
-
-
-                    <div class="card">
-
-
-
-                        <div class="play ">
-
-                            <svg id='Play_Button_Circled_24' width='48' height='48' viewBox='0 0 48 48'
-                                xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'>
-                                <rect width='48' height='48' stroke='none' fill='none' opacity='0' />
-
-                                <!-- Outer Circle (Filled with #3be477) -->
-                                <circle cx="24" cy="24" r="22" fill="#3be477" stroke="none" />
-
-                                <!-- Centered Play Triangle -->
-                                <polygon points="18,14 34,24 18,34" fill="#000000" />
-                            </svg>
-
-
-
-                        </div>
-
-
-
-
-
-
-                        <img src="./images/7bbdc3bc-918e-4291-b30c-a8bd8fc303f3.jpeg" alt="">
-
-                        <h2>Daily Mix 1</h2>
-
-                        <p>A.R. Rahman, Atif Aslam, Shankar-Ehsaan-Loy and more</p>
-
-
-
-
+                    <div class="time flex">
+                        <div id="currentTime">0:00</div>
+                        <div>&#47;</div>
+                        <div id="duration">0:00</div>
                     </div>
-
-
-
-                    <!-- <div class="playbar">
-
-                        Playbar
-                        <div class="songInfo">
-
-                            <ul id="songsList">
-
-                            </ul>
-                        </div>
-
-                        <div class="songButtons">
-
-                            <img src="./previous.svg" alt="previousSong">
-
-                            <img src="./playButton.svg" alt="PlaySong">
-
-                            <img src="./nextBtn.svg" alt="nextSong">
-                        </div>
-                        <div class="controls">
-                            <button id="prevBtn">⏮️ Previous</button>
-                            <button id="playPauseBtn">⏯️ Play/Pause</button>
-                            <button id="nextBtn">⏭️ Next</button>
-                        </div>
-
-                        <div class="seek-container">
-                            <span id="currentTime">0:00</span>
-                            <input type="range" id="seekBar" min="0" max="100" value="0">
-                            <span id="duration">0:00</span>
-                        </div>
-
-
-
-                        <div class="songTime">
-
-                        </div>
-
-
-                    </div> -->
-
-                    <div class="playbar">
+                    <div class="flex" style="gap:10px; align-items: center;">
+                        <img class="invert musicgreen" src="imgs/musicgreen.png" height="40">
                         <div id="playingSongName">No song playing</div>
-                        <div class="seek-container">
-                            <span id="currentTime">0:00</span>
-                            <input type="range" id="seekBar" min="0" max="100" value="0">
-                            <span id="duration">0:00</span>
-                        </div>
-                        <div class="controls">
-                            <button id="prevBtn"><img src="./previous.svg" alt="previousSong"></button>
-                            <button id="playPauseBtn"><img src="./playButton.svg" alt="PlaySong"></button>
-                            <button id="nextBtn"><img src="./nextBtn.svg" alt="nextSong"></button>
-                        </div>
+                    </div>
+                    <div class="volumeRocker flex">
+                        <button id="muteBtn">
+                            <img src="imgs/volume.svg" alt="Unmute">
+                        </button>
+                        <input type="range" id="volumeControl" min="0" max="1" step="0.01" value="1">
+                        <span id="volumePercentage">100%</span>
                     </div>
 
                 </div>
-
             </div>
 
-
         </div>
+
+
+    </div>
 </body>
 
 </html>

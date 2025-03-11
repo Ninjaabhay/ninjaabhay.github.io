@@ -1,0 +1,50 @@
+#seekBar {
+  width: inherit;
+  cursor: pointer;
+  appearance: none;
+  height: 2px;
+  border-radius: 4px;
+  background: linear-gradient(
+    to right,
+    #1db954 var(--progress, 0%),
+    #ddd var(--progress, 0%)
+  );
+  outline: none;
+  transition: background 0.2s ease in;
+}
+
+/* WebKit browsers (Chrome, Safari) */
+#seekBar::-webkit-slider-runnable-track {
+  height: 2px;
+  border-radius: 4px;
+  background: linear-gradient(
+    to right,
+    #1db954 var(--progress, 0%),
+    #ddd var(--progress, 0%)
+  );
+}
+
+#seekBar::-webkit-slider-thumb {
+  appearance: none;
+  width: 10px;
+  height: 10px;
+  background: white;
+  border-radius: 50%;
+  cursor: pointer;
+  margin-top: -4px;
+  position: relative;
+  z-index: 2;
+}
+
+/* Firefox */
+#seekBar::-moz-range-progress {
+  background: #1db954;
+  height: 5px;
+  border-radius: 4px;
+}
+
+#seekBar::-moz-range-track {
+  background: #ddd;
+  height: 5px;
+  border-radius: 4px;
+}
