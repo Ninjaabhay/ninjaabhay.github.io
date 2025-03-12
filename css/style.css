@@ -22,6 +22,19 @@ body {
   height: 98vh;
   margin-left: 5px;
 }
+.saxophone {
+  /* margin-top: 2px; */
+  cursor: pointer;
+  display: flex;
+  gap: 10px;
+  font-size: 22px;
+  font-weight: 700;
+  font-family: fantasy;
+}
+.saxophone img {
+  border-radius: 50%;
+  width: 40px;
+}
 
 .right {
   width: 100vw;
@@ -32,8 +45,8 @@ body {
   list-style: none;
   width: 18px;
   display: flex;
-  gap: 15px;
-  padding-top: 15px;
+  gap: 16px;
+  padding-top: 10px;
   font-weight: bold;
 }
 
@@ -53,7 +66,7 @@ body {
 }
 
 .library {
-  height: calc(98vh - 130px);
+  height: calc(98vh - 125px);
   position: relative;
 }
 .footer {
@@ -248,6 +261,9 @@ body {
 }
 .artist {
   margin: 5px 0;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+  color: grey;
 }
 .songName {
   display: flex;
@@ -256,6 +272,7 @@ body {
   overflow: hidden; /* Hides overflow text */
   text-overflow: ellipsis; /* Adds "..." if text overflows */
   max-width: 300px;
+  font-size: medium;
   /* display: block; */
 }
 .playButtonCard {

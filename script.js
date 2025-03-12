@@ -5,6 +5,7 @@ let currentAudio = null; // Currently playing Audio object
 let currentSongIndex = null; // Index of the current song in the active playlist
 let activePlaylistId = null; // ID of the currently active playlist
 let playAudioCallId = 0; // Global counter for playAudio cancellation
+// const backendUrl = "https://cloudflare-music-service.vercel.app";
 const backendUrl = "https://cloudflare-music-service.vercel.app";
 
 // Select elements
@@ -14,6 +15,7 @@ const seekBar = document.getElementById("seekBar");
 const currentTimeDisplay = document.getElementById("currentTime");
 const durationDisplay = document.getElementById("duration");
 const playPauseBtn = document.querySelector("#playPauseBtn img");
+const libraryName = document.getElementById("library-name");
 
 // Volume control elements
 const volumeControl = document.getElementById("volumeControl");
@@ -53,7 +55,7 @@ async function loadPlaylists() {
       // When a playlist card is clicked, load its songs and auto-play its first song.
       card.addEventListener("click", () => {
         activePlaylistId = playlist.id;
-        loadSongsFromPlaylist(playlist.id, true); // When user clicks, auto-play the first song
+        loadSongsFromPlaylist(playlist.id, true, playlist.name); // When user clicks, auto-play the first song
         document.querySelector(".left").style.left = 0;
       });
       playlistContainer.appendChild(card);
@@ -61,7 +63,7 @@ async function loadPlaylists() {
       // On page load, load the first playlist but do not auto-play.
       if (index === 0 && !activePlaylistId) {
         activePlaylistId = playlist.id;
-        loadSongsFromPlaylist(playlist.id, false); // false => no auto-play on page load
+        loadSongsFromPlaylist(playlist.id, false, playlist.name); // false => no auto-play on page load
       }
     });
   } catch (error) {
@@ -72,14 +74,23 @@ async function loadPlaylists() {
 // ---------------------------------
 // LOAD SONGS FROM A PLAYLIST
 // ---------------------------------
-async function loadSongsFromPlaylist(playlistId, autoPlayFirst = false) {
+async function loadSongsFromPlaylist(
+  playlistId,
+  autoPlayFirst = false,
+  playlistName = "Your Library"
+) {
   try {
     const response = await fetch(`${backendUrl}/${playlistId}`);
     const fetchedSongs = await response.json();
+
     // Update global songs and active playlist
     songs = fetchedSongs;
     activePlaylistId = playlistId;
     songList.innerHTML = "";
+
+    // ✅ Update the playlist name in the Library
+    document.getElementById("library-name").textContent = playlistName;
+
     fetchedSongs.forEach((song, idx) => {
       const li = document.createElement("li");
       li.innerHTML = `
@@ -91,7 +102,7 @@ async function loadSongsFromPlaylist(playlistId, autoPlayFirst = false) {
                 <span>${song.name} 🎵</span>
               </div>
             </div>
-            <div class="artist">Abhay Tiwari</div>
+            <div class="artist">${song.artist}</div>
           </div>
           <div class="playButtonCard">
             <img src="imgs/playButtoncard.svg" alt="Play">
@@ -103,8 +114,10 @@ async function loadSongsFromPlaylist(playlistId, autoPlayFirst = false) {
         songs = fetchedSongs;
         playAudio(idx);
       });
+
       songList.appendChild(li);
     });
+
     // If autoPlayFirst is true (only when user clicks a playlist), start playing the first song.
     if (autoPlayFirst && songs.length > 0) {
       playAudio(0);

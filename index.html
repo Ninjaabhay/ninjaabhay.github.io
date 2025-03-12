@@ -4,15 +4,16 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SpotifyClone</title>
+    <title>Swarlok - Music Simplified</title>
     <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="css/utility.css" />
     <link rel="stylesheet" href="css/seekbar.css" />
     <link rel="stylesheet" href="css/playlist.css" />
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
 
 
 
-    <script src="buffer.js" defer></script>
+    <script src="script.js" defer></script>
 </head>
 
 <body>
@@ -23,7 +24,11 @@
         <div class="left ">
             <div class="home bg-grey rounded m-1 p-1">
                 <div class="flex" style="justify-content: space-between;">
-                    <div class="logo invert"><img width="110" src="imgs/logo.svg" alt="" /></div>
+                    <div class="flex saxophone" style="align-items: center;">
+                        <div class="logo invert"><img width="55" src="imgs/saxophone.jpg" alt="" />
+                        </div>
+                        <div>Swarlok</div>
+                    </div>
                     <div class="close invert">
                         <img src="imgs/close.svg" width="30" alt="">
                     </div>
@@ -38,7 +43,7 @@
             <div class="library bg-grey rounded m-1 p-1">
                 <div class="heading">
                     <img class="invert" src="imgs/playlist.svg" alt="libLogo" />
-                    <h2>Your Libraray</h2>
+                    <h2 id="library-name">Your Library</h2>
                 </div>
 
                 <div id="songListing" class="songList">
@@ -58,13 +63,13 @@
 
 
                 <div class="footer">
-                    <div><a href="https://www.spotify.com/jp/legal/"><span>Legal</span></a></div>
-                    <div><a href="https://www.spotify.com/jp/privacy/"><span>Privacy Center</span></a></div>
-                    <div><a href="https://www.spotify.com/jp/legal/privacy-policy/"><span>Privacy Policy</span></a>
+                    <div><a href="#"><span>Legal</span></a></div>
+                    <div><a href="#"><span>Privacy Center</span></a></div>
+                    <div><a href="#"><span>Privacy Policy</span></a>
                     </div>
-                    <div><a href="https://www.spotify.com/jp/legal/cookies-policy/"><span>Cookies</span></a></div>
-                    <div><a href="https://www.spotify.com/jp/legal/privacy-policy/#s3"><span>About Ads</span></a></div>
-                    <div><a href="https://www.spotify.com/jp/accessibility/"><span>Accessibility</span></a></div>
+                    <div><a href="#"><span>Cookies</span></a></div>
+                    <div><a href="#"><span>About Ads</span></a></div>
+                    <div><a href="#"><span>Accessibility</span></a></div>
                 </div>
 
 
@@ -118,7 +123,7 @@
 
             <!-- Playlist Section -->
             <div class="spotifyPlaylist">
-                <h1>Spotify Playlists</h1>
+                <h1>My Playlists</h1>
             </div>
 
             <div id="playlistContainer"></div>
