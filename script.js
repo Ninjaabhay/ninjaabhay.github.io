@@ -15,7 +15,7 @@ const playPauseBtn = document.querySelector("#playPauseBtn img");
 // Fetch and display playlists
 async function loadPlaylists() {
   try {
-    const response = await fetch("http://localhost:3000/playlists");
+    const response = await fetch("https://sangeet-backend.vercel.app/playlists");
     const playlists = await response.json();
     playlistContainer.innerHTML = "";
     playlists.forEach((playlist, index) => {
