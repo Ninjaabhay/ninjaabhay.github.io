@@ -5,8 +5,8 @@ let currentAudio = null; // Currently playing Audio object
 let currentSongIndex = null; // Index of the current song in the active playlist
 let activePlaylistId = null; // ID of the currently active playlist
 let playAudioCallId = 0; // Global counter for playAudio cancellation
-// const backendUrl = "https://cloudflare-music-service.vercel.app";
-const backendUrl = "http://localhost:3000";
+const backendUrl = "https://cloudflare-music-service.vercel.app";
+// const backendUrl = "http://localhost:3000";
 
 // Select elements
 const playlistContainer = document.getElementById("playlistContainer");
