@@ -49,14 +49,21 @@
                 <div id="songListing" class="songList">
                     <ul>
                         <!-- <li>
-                        <img src="music.svg" alt="play">
-
-                        <div class="info">
-                            <div class="songName">${song}</div>
-                            <div class="artist">Abhay Tiwari</div>
-                        </div>
-
-                        <div class=" playButtonCard invert"> <img src="playButtoncard.svg" alt=""></div>
+                            <div class="songName">
+                                <img id="cover-image" src="imgs/default-cover.jpg" alt="Album Cover">
+                                <div class="info flex">
+                                    <div class="songName scrolling-container">
+                                        <div class="scrolling-text">
+                                            <span>No song Playing 🎵</span>
+                                            <span>No song Playing 🎵</span>
+                                        </div>
+                                    </div>
+                                    <div class="artist">Sakshat Abhay Unknown Artist</div>
+                                </div>
+                                <div class="playButtonCard">
+                                    <img src="imgs/playButtoncard.svg" alt="Play">
+                                </div>
+                            </div>`;
                         </li> -->
                     </ul>
                 </div>
@@ -145,7 +152,7 @@
                         <div id="duration">0:00</div>
                     </div>
                     <div class="flex" style="gap:10px; align-items: center;">
-                        <img class="invert musicgreen" src="imgs/musicgreen.png" height="40">
+                        <img id="musiccover" class="musicgreen" src="imgs/default-cover.jpeg" height="40">
                         <div id="playingSongName">No song playing</div>
                     </div>
                     <div class="volumeRocker flex">

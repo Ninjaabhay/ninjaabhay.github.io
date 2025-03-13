@@ -22,6 +22,7 @@ const volumeControl = document.getElementById("volumeControl");
 const volumePercentage = document.getElementById("volumePercentage");
 const muteBtn = document.getElementById("muteBtn");
 const muteIcon = muteBtn.querySelector("img");
+const coverSrc = "imgs/default-cover.jpg";
 
 let lastVolume = 1; // For volume control
 
@@ -32,7 +33,7 @@ async function loadPlaylists() {
   try {
     const response = await fetch(`${backendUrl}/playlists`);
     const playlists = await response.json();
-    // playlistContainer.innerHTML = "";
+    playlistContainer.innerHTML = "";
     playlists.forEach((playlist, index) => {
       const card = document.createElement("div");
       card.className = "playlist-card";
@@ -74,41 +75,36 @@ async function loadPlaylists() {
 // ---------------------------------
 // LOAD SONGS FROM A PLAYLIST
 // ---------------------------------
-async function loadSongsFromPlaylist(
-  playlistId,
-  autoPlayFirst = false,
-  playlistName = "Your Library"
-) {
+async function loadSongsFromPlaylist(playlistId, autoPlayFirst = false) {
   try {
     const response = await fetch(`${backendUrl}/${playlistId}`);
     const fetchedSongs = await response.json();
 
-    // Update global songs and active playlist
+    // ✅ Update global songs and active playlist
     songs = fetchedSongs;
     activePlaylistId = playlistId;
     songList.innerHTML = "";
 
-    // ✅ Update the playlist name in the Library
-    document.getElementById("library-name").textContent = playlistName;
-    console.log(songs[0].cover); // 🔥 Logs the cover URL of the first song
     fetchedSongs.forEach((song, idx) => {
       const li = document.createElement("li");
+      li.innerHTML = "";
       li.innerHTML = `
-        <div class="songName">
-          <div class="info flex">
-            <div class="songName scrolling-container">
-              <div class="scrolling-text">
-                <span>${song.name} 🎵</span>
-                <span>${song.name} 🎵</span>
+          <div class="songName">
+            <div class="info flex">
+              <div class="songName scrolling-container">
+                <div class="scrolling-text">
+                  <span>${song.name} 🎵</span>
+                  <span>${song.name} 🎵</span>
+                </div>
               </div>
+              <div class="artist">${song.artist || "Unknown Artist"}</div>
             </div>
-            <div class="artist">${song.artist}</div>
-          </div>
-          <div class="playButtonCard">
-            <img src="imgs/playButtoncard.svg" alt="Play">
-          </div>
-        </div>`;
-      // Clicking a song updates active playlist and plays that song.
+            <div class="playButtonCard">
+              <img src="imgs/playButtoncard.svg" alt="Play">
+            </div>
+          </div>`;
+      console.log(fetchedSongs[0].cover);
+
       li.addEventListener("click", () => {
         activePlaylistId = playlistId;
         songs = fetchedSongs;
@@ -118,12 +114,12 @@ async function loadSongsFromPlaylist(
       songList.appendChild(li);
     });
 
-    // If autoPlayFirst is true (only when user clicks a playlist), start playing the first song.
+    // ✅ If autoPlayFirst is true, start playing the first song
     if (autoPlayFirst && songs.length > 0) {
       playAudio(0);
     }
   } catch (error) {
-    console.error("Error fetching songs:", error);
+    console.error("❌ Error fetching songs:", error);
   }
 }
 
@@ -166,12 +162,6 @@ async function playAudio(idx) {
     updateScrollingEffect(idx, true);
     document.querySelector("#playingSongName").textContent = songs[idx].name;
     toggleSidebarPlayButton(idx, true);
-
-    if (songs[idx].cover != "default-cover.jpg") {
-      document.querySelector("#musiccover").src = songs[idx].cover;
-    } else {
-      document.querySelector("#musiccover").src = "imgs/default-cover.jpeg";
-    }
 
     currentAudio
       .play()
