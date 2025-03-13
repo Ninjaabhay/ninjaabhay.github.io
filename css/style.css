@@ -457,9 +457,6 @@ body {
   .songList ul li {
     width: 90%;
   }
-  .musicgreen {
-    display: none;
-  }
 }
 
 @media (max-width: 450px) {
