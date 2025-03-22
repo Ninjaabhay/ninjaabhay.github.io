@@ -9,9 +9,8 @@
     <link rel="stylesheet" href="css/utility.css" />
     <link rel="stylesheet" href="css/seekbar.css" />
     <link rel="stylesheet" href="css/playlist.css" />
+
     <link rel="icon" type="image/x-icon" href="favicon.ico">
-
-
 
     <script src="script.js" defer></script>
 </head>
@@ -78,8 +77,6 @@
                     <div><a href="#"><span>About Ads</span></a></div>
                     <div><a href="#"><span>Accessibility</span></a></div>
                 </div>
-
-
             </div>
 
 
@@ -133,7 +130,12 @@
                 <h1>My Playlists</h1>
             </div>
 
-            <div id="playlistContainer"></div>
+            <div id="playlistContainer">
+
+            </div>
+            <!-- <div class="coverCard">
+                <img src="imgs/default-cover.jpeg" alt="" height="400">
+            </div> -->
 
             <div class="playbarContainer">
                 <div class="seek-container">
@@ -146,15 +148,20 @@
                         <button id="nextBtn"><img src="imgs/nextBtn.svg" alt="nextSong"></button>
                     </div>
 
-                    <div class="time flex">
+                    <div class="time">
                         <div id="currentTime">0:00</div>
-                        <div>&#47;</div>
+                        <div id="slash">&#47;</div>
+                        <div id="divider"></div>
                         <div id="duration">0:00</div>
                     </div>
                     <div class="flex" style="gap:10px; align-items: center;">
                         <img id="musiccover" class="musicgreen" src="imgs/default-cover.jpeg" height="40">
-                        <div id="playingSongName">No song playing</div>
+                        <div id="playbar-info">
+                            <div id="playingSongName">No song playing</div>
+                            <div id="playbar-artist">Unknown artist</div>
+                        </div>
                     </div>
+
                     <div class="volumeRocker flex">
                         <button id="muteBtn">
                             <img src="imgs/volume.svg" alt="Unmute">

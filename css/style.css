@@ -18,7 +18,8 @@ body {
 }
 
 .left {
-  min-width: 380px;
+  /* min-width: 450px; */
+  width: 550px;
   height: 98vh;
   margin-left: 5px;
 }
@@ -39,6 +40,7 @@ body {
 .right {
   width: 100vw;
   height: 98vh;
+  overflow: auto;
 }
 
 .home ul li {
@@ -217,10 +219,10 @@ body {
 }
 
 .songList ul {
-  padding: 0px 30px;
+  padding: 10px 20px;
 }
 .songList {
-  max-height: 450px;
+  max-height: 70%;
   overflow-y: auto; /* Allows scrolling */
   display: flex;
   flex-direction: column; /* Ensures songs stack properly */
@@ -234,17 +236,18 @@ body {
   width: 100%; /* Ensure it uses full width */
   padding: 0; /* Remove extra padding */
   margin: 0; /* Ensure no extra margin */
+  margin: 10px 0px;
   max-height: calc(98vh - 240px);
 }
 
 .songList ul li {
   display: flex;
   gap: 5px;
-  padding: 10px 10px;
+  padding: 3px 10px;
   cursor: pointer;
-  justify-content: space-between;
+  justify-content: space-evenly;
   border: 1px solid white;
-  width: 300px;
+  width: 90%;
   border-radius: 5px;
   margin-left: 15px;
   margin-bottom: 10px;
@@ -252,7 +255,7 @@ body {
 
 .info {
   display: flex;
-  width: 80%;
+  width: 70%;
   /* border: 2px solid white; */
   font-size: 12px;
   flex-direction: column;
@@ -269,11 +272,12 @@ body {
   display: flex;
   justify-content: space-between;
   white-space: nowrap;
-  overflow: hidden; /* Hides overflow text */
-  text-overflow: ellipsis; /* Adds "..." if text overflows */
-  max-width: 300px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: 340px;
   font-size: medium;
   /* display: block; */
+  align-items: center;
 }
 .playButtonCard {
   display: flex;
@@ -326,7 +330,7 @@ body {
 
 .playbarContainer {
   position: fixed;
-  width: calc(100vw - 396px);
+  width: calc(99vw);
   /* background-color: blue; */
   height: 60px;
   bottom: 20px;
@@ -358,6 +362,7 @@ body {
 }
 
 .time {
+  display: flex;
   gap: 2px;
 }
 
@@ -410,21 +415,46 @@ body {
   width: 24px;
   height: 24px;
 }
+#playbar-info {
+  height: 40px;
+  min-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 
 #playingSongName {
   display: flex;
-  text-align: center;
-  min-width: 90px;
-  height: 40px;
+  /* text-align: center; */
+  /* width: 90px; */
+  height: 20px;
+  min-width: 200px;
+  /* align-items: center; */
   overflow: hidden;
   text-overflow: ellipsis;
-  align-items: center;
+  font-size: medium;
+  font-weight: 600;
 }
+#playbar-artist {
+  color: grey;
+}
+#music-card-phone {
+  display: none;
+}
+#divider {
+  display: none;
+}
+
 @media (max-width: 1200px) {
   .volumeRocker {
     position: static;
   }
 }
+@media (max-width: 800px) {
+  #volumeControl {
+    display: none;
+  }
+}
+
 @media (max-width: 950px) {
   .left {
     position: absolute;
@@ -474,7 +504,13 @@ body {
   }
   .playbar {
     gap: 30px;
+    height: 80px;
+    bottom: 30px;
   }
+  .seek-container {
+    bottom: 25px;
+  }
+
   .songList ul li {
     display: flex;
     justify-content: space-between;
@@ -483,16 +519,32 @@ body {
     --a: 1;
     top: 220px;
   }
-  #volumeControl {
+  .time {
+    flex-direction: column;
+  }
+  #slash {
     display: none;
   }
+  #divider {
+    display: block;
+    border: 1px solid white;
+  }
+
+  .volumeRocker,
+  #muteBtn,
   #volumePercentage {
     display: none;
   }
-  #playingSongName {
-    width: 90px;
+  #playbar-info {
     height: 40px;
-    overflow: hidden;
-    text-overflow: ellipsis; /* Adds "..." if text overflows */
+    min-width: 150px;
+  }
+  #playingSongName {
+    height: 20px;
+    min-width: 150px;
+  }
+  #paybar-artist {
+    height: 20px;
+    min-width: 150px;
   }
 }

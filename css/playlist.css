@@ -1,6 +1,7 @@
 #playlistContainer {
   display: flex;
   flex-wrap: wrap;
+  flex-shrink: 2;
   gap: 12px;
   height: 70%;
   /* width: auto; */
@@ -10,8 +11,8 @@
 }
 
 .playlist-card {
-  width: 240px;
-  height: 350px;
+  min-width: 240px;
+  min-height: 350px;
   background-color: #252525;
   color: white;
   display: flex;
@@ -44,6 +45,9 @@
   #playlistContainer {
     justify-content: center;
     align-items: center;
-    height: calc(80% - 25px);
+    height: calc(80% - 60px);
+  }
+  #playlistContainer {
+    flex-wrap: wrap;
   }
 }

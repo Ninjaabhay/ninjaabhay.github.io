@@ -22,10 +22,8 @@ const volumeControl = document.getElementById("volumeControl");
 const volumePercentage = document.getElementById("volumePercentage");
 const muteBtn = document.getElementById("muteBtn");
 const muteIcon = muteBtn.querySelector("img");
-const coverSrc = "imgs/default-cover.jpg";
 
 let lastVolume = 1; // For volume control
-
 // ---------------------------------
 // FETCH AND LOAD PLAYLISTS
 // ---------------------------------
@@ -33,7 +31,7 @@ async function loadPlaylists() {
   try {
     const response = await fetch(`${backendUrl}/playlists`);
     const playlists = await response.json();
-    playlistContainer.innerHTML = "";
+    // playlistContainer.innerHTML = "";
     playlists.forEach((playlist, index) => {
       const card = document.createElement("div");
       card.className = "playlist-card";
@@ -72,39 +70,95 @@ async function loadPlaylists() {
   }
 }
 
+// load alll songs
+async function loadAllSongs() {
+  try {
+    const response = await fetch(`${backendUrl}/allsongs`);
+    const allSongs = await response.json();
+
+    songs = allSongs; // Store all songs in global variable
+    songList.innerHTML = ""; // Clear previous songs
+
+    allSongs.forEach((song, idx) => {
+      const li = document.createElement("li");
+      li.innerHTML = `
+        <div class="songName">
+          <div class="info flex">
+            <div class="songName scrolling-container">
+              <div class="scrolling-text">
+                <span>${song.name} 🎵</span>
+                <span>${song.name} 🎵</span>
+              </div>
+            </div>
+            <div class="artist">${song.artist || "Unknown Artist"}</div>
+          </div>
+          <div class="playButtonCard">
+            <img src="imgs/playButtoncard.svg" alt="Play">
+          </div>
+        </div>`;
+
+      // Clicking a song should play it directly
+      li.addEventListener("click", () => {
+        playAudio(idx);
+      });
+
+      songList.appendChild(li);
+    });
+  } catch (error) {
+    console.error("Error loading all songs:", error);
+  }
+}
+
 // ---------------------------------
 // LOAD SONGS FROM A PLAYLIST
 // ---------------------------------
-async function loadSongsFromPlaylist(playlistId, autoPlayFirst = false) {
+async function loadSongsFromPlaylist(
+  playlistId,
+  autoPlayFirst = false,
+  playlistName = "Your Library"
+) {
   try {
     const response = await fetch(`${backendUrl}/${playlistId}`);
     const fetchedSongs = await response.json();
 
-    // ✅ Update global songs and active playlist
+    // Update global songs and active playlist
     songs = fetchedSongs;
     activePlaylistId = playlistId;
     songList.innerHTML = "";
 
+    // ✅ Update the playlist name in the Library
+    document.getElementById("library-name").textContent = playlistName;
     fetchedSongs.forEach((song, idx) => {
+      // if (song.cover === "default-cover.jpg") {
+      //   coverUrl = "imgs/default-cover.jpeg";
+      // } else {
+      //   coverUrl = song.cover;
+      // }
       const li = document.createElement("li");
-      li.innerHTML = "";
+      if (song.cover != "default-cover.jpg") {
+        coverImgUrl = song.cover;
+        console.log(song.cover);
+      } else {
+        coverImgUrl = "imgs/default-cover.jpeg";
+      }
       li.innerHTML = `
-          <div class="songName">
-            <div class="info flex">
-              <div class="songName scrolling-container">
-                <div class="scrolling-text">
-                  <span>${song.name} 🎵</span>
-                  <span>${song.name} 🎵</span>
-                </div>
+        <div class="songName">
+        <img id="li-song-cover" src=${coverImgUrl} height="40" alt="cover">
+          <div class="info flex">
+            <div class="songName scrolling-container">
+              <div class="scrolling-text">
+                <span>${song.name} 🎵</span>
+                <span>${song.name} 🎵</span>
               </div>
-              <div class="artist">${song.artist || "Unknown Artist"}</div>
             </div>
-            <div class="playButtonCard">
-              <img src="imgs/playButtoncard.svg" alt="Play">
-            </div>
-          </div>`;
-      console.log(fetchedSongs[0].cover);
+            <div class="artist">${song.artist}</div>
+          </div>
+          <div class="playButtonCard">
+            <img src="imgs/playButtoncard.svg" alt="Play">
+          </div>
+        </div>`;
 
+      // Clicking a song updates active playlist and plays that song.
       li.addEventListener("click", () => {
         activePlaylistId = playlistId;
         songs = fetchedSongs;
@@ -114,12 +168,12 @@ async function loadSongsFromPlaylist(playlistId, autoPlayFirst = false) {
       songList.appendChild(li);
     });
 
-    // ✅ If autoPlayFirst is true, start playing the first song
+    // If autoPlayFirst is true (only when user clicks a playlist), start playing the first song.
     if (autoPlayFirst && songs.length > 0) {
       playAudio(0);
     }
   } catch (error) {
-    console.error("❌ Error fetching songs:", error);
+    console.error("Error fetching songs:", error);
   }
 }
 
@@ -127,56 +181,29 @@ async function loadSongsFromPlaylist(playlistId, autoPlayFirst = false) {
 // PLAY AUDIO WITH BUFFERING & CANCELLATION
 // ---------------------------------
 async function playAudio(idx) {
-  playAudioCallId++;
-  const thisCallId = playAudioCallId;
-
-  // Stop any currently playing audio.
   if (currentAudio) {
     currentAudio.pause();
     currentAudio.currentTime = 0;
-    if (currentAudio.src && currentAudio.src.startsWith("blob:")) {
-      URL.revokeObjectURL(currentAudio.src);
-    }
-    toggleSidebarPlayButton(currentSongIndex, false);
-    currentAudio = null;
   }
 
   currentSongIndex = idx;
-  const originalUrl = songs[idx].url;
-  console.log("🎵 Original Song URL:", originalUrl);
+  currentAudio = new Audio(songs[idx].url);
+  currentAudio.preload = "auto";
 
-  try {
-    const response = await fetch(originalUrl);
-    if (thisCallId !== playAudioCallId) return;
-    const arrayBuffer = await response.arrayBuffer();
-    if (thisCallId !== playAudioCallId) return;
-    const audioBlob = new Blob([arrayBuffer], { type: "audio/mpeg" });
-    const bufferedUrl = URL.createObjectURL(audioBlob);
-    console.log("🎵 Buffered URL created.");
+  playPauseBtn.src = "imgs/pauseButton.svg";
+  document.querySelector("#playingSongName").textContent = songs[idx].name;
+  document.querySelector("#playbar-artist").textContent = songs[idx].artist;
 
-    currentAudio = new Audio(bufferedUrl);
-    currentAudio.preload = "auto";
-
-    // Update UI for the current song.
-    playPauseBtn.src = "imgs/pauseButton.svg";
-    updateScrollingEffect(idx, true);
-    document.querySelector("#playingSongName").textContent = songs[idx].name;
-    toggleSidebarPlayButton(idx, true);
-
-    currentAudio
-      .play()
-      .then(() => console.log("✅ Playback started"))
-      .catch((err) => console.error("❌ Playback error:", err));
-
-    currentAudio.addEventListener("timeupdate", updateSeekBar);
-    currentAudio.addEventListener("loadedmetadata", displayDuration);
-    currentAudio.addEventListener("ended", () => {
-      toggleSidebarPlayButton(idx, false);
-      playNextSong();
-    });
-  } catch (error) {
-    console.error("Error in playAudio:", error);
+  if (songs[idx].cover) {
+    document.querySelector("#musiccover").src = songs[idx].cover;
+  } else {
+    document.querySelector("#musiccover").src = "imgs/default-cover.jpeg";
   }
+
+  currentAudio.play().catch((error) => console.error("Playback error:", error));
+
+  currentAudio.addEventListener("timeupdate", updateSeekBar);
+  currentAudio.addEventListener("ended", playNextSong);
 }
 
 // ---------------------------------

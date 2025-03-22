@@ -24,7 +24,6 @@ const muteBtn = document.getElementById("muteBtn");
 const muteIcon = muteBtn.querySelector("img");
 
 let lastVolume = 1; // For volume control
-
 // ---------------------------------
 // FETCH AND LOAD PLAYLISTS
 // ---------------------------------
@@ -90,11 +89,17 @@ async function loadSongsFromPlaylist(
 
     // ✅ Update the playlist name in the Library
     document.getElementById("library-name").textContent = playlistName;
-    console.log(songs[0].cover); // 🔥 Logs the cover URL of the first song
     fetchedSongs.forEach((song, idx) => {
       const li = document.createElement("li");
+      if (song.cover != "default-cover.jpg") {
+        coverImgUrl = song.cover;
+        console.log(song.cover);
+      } else {
+        coverImgUrl = "imgs/default-cover.jpeg";
+      }
       li.innerHTML = `
         <div class="songName">
+        <img id="li-song-cover" src=${coverImgUrl} height="40" alt="cover">
           <div class="info flex">
             <div class="songName scrolling-container">
               <div class="scrolling-text">
@@ -108,6 +113,7 @@ async function loadSongsFromPlaylist(
             <img src="imgs/playButtoncard.svg" alt="Play">
           </div>
         </div>`;
+
       // Clicking a song updates active playlist and plays that song.
       li.addEventListener("click", () => {
         activePlaylistId = playlistId;
@@ -165,6 +171,7 @@ async function playAudio(idx) {
     playPauseBtn.src = "imgs/pauseButton.svg";
     updateScrollingEffect(idx, true);
     document.querySelector("#playingSongName").textContent = songs[idx].name;
+    document.querySelector("#playbar-artist").textContent = songs[idx].artist;
     toggleSidebarPlayButton(idx, true);
 
     if (songs[idx].cover != "default-cover.jpg") {
