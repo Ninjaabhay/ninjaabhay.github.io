@@ -5,8 +5,8 @@ let currentAudio = null; // Currently playing Audio object
 let currentSongIndex = null; // Index of the current song in the active playlist
 let activePlaylistId = null; // ID of the currently active playlist
 let playAudioCallId = 0; // Global counter for playAudio cancellation
-// const backendUrl = "https://cloudflare-music-service.vercel.app";
-const backendUrl = "http://localhost:3000";
+const backendUrl = "https://cloudflare-music-service.vercel.app";
+// const backendUrl = "http://localhost:3000";
 
 // Select elements
 const playlistContainer = document.getElementById("playlistContainer");
@@ -136,55 +136,61 @@ async function loadSongsFromPlaylist(
 // ---------------------------------
 // PLAY AUDIO WITH BUFFERING & CANCELLATION
 // ---------------------------------
+// let currentAudio = null;
+// let playAudioCallId = 0; // Unique ID to track requests
+
 async function playAudio(idx) {
   playAudioCallId++;
   const thisCallId = playAudioCallId;
 
-  // Stop any currently playing audio.
+  // Stop the previous song immediately
   if (currentAudio) {
     currentAudio.pause();
     currentAudio.currentTime = 0;
-    if (currentAudio.src && currentAudio.src.startsWith("blob:")) {
-      URL.revokeObjectURL(currentAudio.src);
-    }
     toggleSidebarPlayButton(currentSongIndex, false);
+    currentAudio.src = ""; // Free memory
     currentAudio = null;
   }
 
   currentSongIndex = idx;
-  const originalUrl = songs[idx].url;
-  console.log("🎵 Original Song URL:", originalUrl);
+  const songUrl = songs[idx].url; // Direct URL for streaming
+  console.log("🎵 Playing:", songUrl);
 
   try {
-    const response = await fetch(originalUrl);
-    if (thisCallId !== playAudioCallId) return;
-    const arrayBuffer = await response.arrayBuffer();
-    if (thisCallId !== playAudioCallId) return;
-    const audioBlob = new Blob([arrayBuffer], { type: "audio/mpeg" });
-    const bufferedUrl = URL.createObjectURL(audioBlob);
-    console.log("🎵 Buffered URL created.");
+    // ✅ Stream directly instead of fetching first
+    const newAudio = new Audio(songUrl);
+    newAudio.preload = "auto";
+    newAudio.crossOrigin = "anonymous";
+    newAudio.autoplay = true; // ✅ Play immediately
 
-    currentAudio = new Audio(bufferedUrl);
-    currentAudio.preload = "auto";
+    // ✅ Cancel request if another song is clicked
+    newAudio.addEventListener("loadedmetadata", () => {
+      if (thisCallId !== playAudioCallId) {
+        console.log("🚫 Cancelled loading:", songs[idx].name);
+        newAudio.pause();
+        newAudio.src = "";
+        return;
+      }
+      console.log("✅ Now playing:", songs[idx].name);
+    });
 
-    // Update UI for the current song.
+    // ✅ Assign the new audio instance globally
+    currentAudio = newAudio;
+
+    // ✅ Update UI
     playPauseBtn.src = "imgs/pauseButton.svg";
     updateScrollingEffect(idx, true);
     document.querySelector("#playingSongName").textContent = songs[idx].name;
     document.querySelector("#playbar-artist").textContent = songs[idx].artist;
     toggleSidebarPlayButton(idx, true);
 
-    if (songs[idx].cover != "default-cover.jpg") {
-      document.querySelector("#musiccover").src = songs[idx].cover;
-    } else {
-      document.querySelector("#musiccover").src = "imgs/default-cover.jpeg";
-    }
+    // ✅ Update song cover
+    document.querySelector("#musiccover").src =
+      songs[idx].cover !== "default-cover.jpg"
+        ? songs[idx].cover
+        : "imgs/default-cover.jpeg";
 
-    currentAudio
-      .play()
-      .then(() => console.log("✅ Playback started"))
-      .catch((err) => console.error("❌ Playback error:", err));
-
+    // ✅ Audio event listeners
     currentAudio.addEventListener("timeupdate", updateSeekBar);
     currentAudio.addEventListener("loadedmetadata", displayDuration);
     currentAudio.addEventListener("ended", () => {
@@ -192,7 +198,7 @@ async function playAudio(idx) {
       playNextSong();
     });
   } catch (error) {
-    console.error("Error in playAudio:", error);
+    console.error("❌ Error playing song:", error);
   }
 }
 

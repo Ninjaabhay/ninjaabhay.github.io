@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub Repo Card</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #1e1e1e;
+        }
+
+        .card {
+            background: #333;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            width: 250px;
+        }
+
+        .github-logo {
+            width: 50px;
+            height: 50px;
+            margin-bottom: 10px;
+        }
+
+        .repo-name {
+            font-size: 16px;
+            font-weight: bold;
+            color: white;
+        }
+
+        .github-link {
+            display: block;
+            text-decoration: none;
+            background: #444;
+            color: white;
+            padding: 8px;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="card" id="repo-card">
+        <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="GitHub Logo"
+            class="github-logo">
+        <div class="repo-name" id="repo-name">Loading...</div>
+        <a href="#" target="_blank" id="repo-link" class="github-link">View Repo</a>
+    </div>
+    <script>
+        fetch("https://api.github.com/repos/Ninjaabhay/Project-SheManages")
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("repo-name").textContent = data.name;
+                document.getElementById("repo-link").href = data.html_url;
+            });
+    </script>
+</body>
+
+</html>
